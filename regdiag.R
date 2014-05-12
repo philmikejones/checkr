@@ -32,13 +32,16 @@
 # http://discover.ukdataservice.ac.uk/catalogue/?sn=7216
 
 # The instructions and companion blog article are here:
-# philmikejones.net/
+#  http://www.philmikejones.net/regression-diagnostics-with-r/
 
 
 
 # Libraries ====
-install.packages("sjPlot", "ggplot2")
-library(sjPlot); library(ggplot2)
+# Uncomment 'install.packages...' lines if you get errors using libraries
+# install.packages("sjPlot")
+# install.packages("ggplot2")
+# install.packages("car")
+library(sjPlot); library(ggplot2); library(car)
 
 # Load data ====
 lcfs <- 
@@ -54,8 +57,36 @@ sji.viewSPSS(lcfs)
 m1 <- lm(lcfs$P550tpr ~ lcfs$P344pr)
 summary(m1)
 
+
+
+# Diagnostics ====
+# Linear relationship
 ggplot(lcfs, aes(P344pr, P550tpr)) + 
   geom_point() + 
   geom_smooth(method = lm) +
   xlab("Gross normal weekly household income (P344pr)") +
   ylab("Total expenditure (P550tpr)")
+
+# Residuals are independent
+# Not tested statistically
+
+# Residuals normally distributed
+ggplot() + geom_density(aes(residuals(m1)))  # density plot
+qqPlot(m1)  # qq plot
+
+# Homoscedasticity
+# (variance of residuals doesn't differ by predicted values)
+spreadLevelPlot(m1)
+
+
+
+# Outliers ====
+# Cook's Distance
+plot(m1, which = 4)
+
+# Leverage (hat) values
+lev <- hatvalues(m1)
+plot(lev)
+# Run the following two lines of code if you need to identify outliers:
+# out <- identify(lev)
+# View(lcfs[out, ])
