@@ -1,0 +1,9 @@
+Package: checkr
+Title: Easily check regression diagnostics
+Version: 0.0.0.9000
+Authors@R: person("Phil Mike", "Jones", email = "philmikejones@gmail.com", role = c("aut", "cre"))
+Description: Easily run and check diagnostics for regression models.
+Depends: R (>= 3.3.1)
+License: see LICENSE
+Encoding: UTF-8
+LazyData: true
