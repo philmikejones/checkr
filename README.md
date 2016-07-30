@@ -1,5 +1,5 @@
-regdiag
-=======
+checkr
+======
 
-Regression diagnostics in R
-See http://www.philmikejones.net/regression-diagnostics-with-r/ or regdiag.R for further instructions.
+Easily check regression assumptions and perform diagnostics of regression 
+models in R.
