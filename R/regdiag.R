@@ -1,23 +1,12 @@
-# Load data ====
-lcfs <- 
-  sji.SPSS("UKDA-7216-spss/spss/spss14/lcf_2010_teaching_dataset_dvhh_final_july_v2.sav")
-
-# View data frame and value labels ====
-View(lcfs)
-sji.viewSPSS(lcfs)
-
-
-
 # Regression model ====
 m1 <- lm(lcfs$P550tpr ~ lcfs$P344pr)
 summary(m1)
 
 
-
 # Diagnostics ====
 # Linear relationship
-ggplot(lcfs, aes(P344pr, P550tpr)) + 
-  geom_point() + 
+ggplot(lcfs, aes(P344pr, P550tpr)) +
+  geom_point() +
   geom_smooth(method = lm) +
   xlab("Gross normal weekly household income (P344pr)") +
   ylab("Total expenditure (P550tpr)")
