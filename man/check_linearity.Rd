@@ -19,7 +19,4 @@ A scatter plot
 \description{
 check_linearity
 }
-\examples{
-check_linearity(m1)
-}
 
