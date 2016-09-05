@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/philmikejones/rakeR.svg?branch=master)](https://travis-ci.org/philmikejones/rakeR)
+
 checkr
 ======
 
