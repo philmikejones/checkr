@@ -13,6 +13,6 @@ check_logit(model)
 A list containing: the difference between the null deviance and model deviance; the difference in degrees of freedom; the chi-squared probability of the deviance statistic; Cox and Snell pseudo-R^2; Nagelkerke pseudo-R^2; and Hosmer pseudo-R^2.
 }
 \description{
-Check logistic regression assumptions and statistics
+Check logistic regression statistics and assumptions
 }
 

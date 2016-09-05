@@ -1,6 +1,6 @@
 #' check_logit
 #'
-#' Check logistic regression assumptions and statistics
+#' Check logistic regression statistics and assumptions
 #'
 #' @param model a logit model object to test
 #'
