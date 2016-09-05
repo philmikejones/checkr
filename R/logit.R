@@ -1,6 +1,6 @@
 # Helper functions for logistic regression testing and diagnostics
 
-logit_results <- function(model) {
+check_logit <- function(model) {
 
   # Difference between null model and model should be positive
   # I.e. if model deviance < null model deviance, model is an improvement
@@ -29,4 +29,5 @@ logit_results <- function(model) {
     "hosmer"        = hosmer)
 
   out
+
 }
