@@ -15,7 +15,7 @@ check_logit <- function(model) {
   diff_df       <- model[["df.null"]] - model[["df.residual"]]
 
   # Determine statistical significance (because diff_deviance is chisq dist)
-  chisq_prob    <- 1 - pchisq(q  = diff_deviance, df = diff_df)
+  chisq_prob    <- 1 - stats::pchisq(q  = diff_deviance, df = diff_df)
 
   # Pseudo R squares
   cox_snell <- 1 - exp((model[["deviance"]] - model[["null.deviance"]]) /
