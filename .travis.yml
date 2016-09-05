@@ -1,0 +1,8 @@
+language: r
+cache: packages
+
+dist: trusty
+
+notifications:
+  on_success: change
+  on_failure: change
