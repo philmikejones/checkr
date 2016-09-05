@@ -4,7 +4,15 @@
 #'
 #' @param model a logit model object to test
 #'
-#' @return A list containing: the difference between the null deviance and model deviance; the difference in degrees of freedom; the chi-squared probability of the deviance statistic; Cox and Snell pseudo-R^2; Nagelkerke pseudo-R^2; and Hosmer pseudo-R^2.
+#' @return A list containing:
+#' \itemize{
+#'   \item the difference between the null deviance and model deviance
+#'   \item the difference in degrees of freedom
+#'   \item the chi-squared probability of the deviance statistic
+#'   \item Cox and Snell pseudo R-squared
+#'   \item Nagelkerke pseudo R-squared; and
+#'   \item Hosmer pseudo R-squared.
+#' }
 #' @export
 check_logit <- function(model) {
 
