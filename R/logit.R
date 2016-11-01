@@ -29,20 +29,22 @@
 check_logit <- function(model) {
 
   # Individual predictor value results
-  predictor  = attr(model[["coefficients"]], "names")
-  beta       = model[["coefficients"]]
-  p_value    = summary(model)[["coefficients"]][, 4]
-  odds_ratio = exp(beta)
-  conf_int   = exp(stats::confint(model))  # MASS must be loaded for glm method
-  lower_ci   = conf_int[, 1]
-  upper_ci   = conf_int[, 2]
+  predictor  <- attr(model[["coefficients"]], "names")
+  beta       <- model[["coefficients"]]
+  p_value    <- summary(model)[["coefficients"]][, 4]
+  sig        <- " "
+  odds_ratio <- exp(beta)
+  conf_int   <- exp(stats::confint(model))  # MASS must be loaded for glm method
+  lower_ci   <- conf_int[, 1]
+  upper_ci   <- conf_int[, 2]
 
 
-  individual_results <- data.frame(
+  ind_res <- data.frame(
 
     predictor,
     beta,
     p_value,
+    sig,
     lower_ci,
     odds_ratio,
     upper_ci,
@@ -51,9 +53,12 @@ check_logit <- function(model) {
 
   )
 
-  individual_results["(Intercept)", "lower_ci"]   <- NA_real_
-  individual_results["(Intercept)", "odds_ratio"] <- NA_real_
-  individual_results["(Intercept)", "upper_ci"]   <- NA_real_
+  ind_res["(Intercept)", "lower_ci"]   <- NA_real_
+  ind_res["(Intercept)", "odds_ratio"] <- NA_real_
+  ind_res["(Intercept)", "upper_ci"]   <- NA_real_
+
+  ind_res$sig[ind_res$"p_value" < 0.05] <- "*"
+  ind_res$sig[ind_res$"p_value" < 0.01] <- "**"
 
 
   # Model overall results
@@ -75,7 +80,7 @@ check_logit <- function(model) {
   hosmer <- diff_deviance / model[["null.deviance"]]
 
   # List of outputs
-  overall_results <- data.frame(
+    over_res <- data.frame(
 
     "diff_deviance" = diff_deviance,
     "diff_df"       = diff_df,
@@ -89,8 +94,8 @@ check_logit <- function(model) {
   )
 
   list(
-    "ind"  = individual_results,
-    "over" = overall_results
+    "ind"  = ind_res,
+    "over" = over_res
   )
 
 }
