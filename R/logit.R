@@ -32,7 +32,7 @@ check_logit <- function(model) {
   predictor  = attr(model[["coefficients"]], "names")
   beta       = model[["coefficients"]]
   odds_ratio = beta ^ 2
-  conf_int   = exp(stats::confint(model))
+  conf_int   = exp(stats::confint(model))  # MASS must be loaded for glm method
   lower_ci   = conf_int[, 1]
   upper_ci   = conf_int[, 2]
 
