@@ -32,7 +32,7 @@ check_logit <- function(model) {
   predictor  = attr(model[["coefficients"]], "names")
   beta       = model[["coefficients"]]
   odds_ratio = beta ^ 2
-  conf_int   = exp(confint(model))
+  conf_int   = exp(stats::confint(model))
   lower_ci   = conf_int[, 1]
   upper_ci   = conf_int[, 2]
 
