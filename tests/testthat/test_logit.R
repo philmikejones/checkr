@@ -6,6 +6,14 @@ context("Test over results")
 test_that("Intercept is in results", {
   expect_true(grepl("(Intercept)", m1$ind$predictor[1]))
 })
+test_that("Odds ratio in range of confidence intervals", {
+  expect_true(all(m1$ind$odds_ratio > m1$ind$lower_ci, na.rm = TRUE))
+  expect_true(all(m1$ind$odds_ratio < m1$ind$upper_ci, na.rm = TRUE))
+})
+test_that("p values between 0 and 1", {
+  expect_true(all(m1$ind$p_value <= 1, na.rm = TRUE))
+  expect_true(all(m1$ind$p_value >= 0, na.rm = TRUE))
+})
 
 
 context("Test ind results")

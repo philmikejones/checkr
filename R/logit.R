@@ -31,6 +31,7 @@ check_logit <- function(model) {
   # Individual predictor value results
   predictor  = attr(model[["coefficients"]], "names")
   beta       = model[["coefficients"]]
+  p_value    = summary(model)[["coefficients"]][, 4]
   odds_ratio = exp(beta)
   conf_int   = exp(stats::confint(model))  # MASS must be loaded for glm method
   lower_ci   = conf_int[, 1]
@@ -41,6 +42,7 @@ check_logit <- function(model) {
 
     predictor,
     beta,
+    p_value,
     lower_ci,
     odds_ratio,
     upper_ci,
