@@ -4,18 +4,57 @@
 #'
 #' @param model a logit model object to test
 #'
-#' @return A list containing:
+#' @return A list containing two data frames ('ind' and 'over'):
 #' \itemize{
-#'   \item the difference between the null deviance and model deviance
-#'   \item the difference in degrees of freedom
-#'   \item the chi-squared probability of the deviance statistic
-#'   \item Cox and Snell pseudo R-squared
-#'   \item Nagelkerke pseudo R-squared; and
-#'   \item Hosmer pseudo R-squared.
+#'   \item \code{ind}
+#'     \itemize{
+#'       \item \code{predictor} Predictor variable
+#'       \item \code{beta} Beta coefficient
+#'       \item \code{lower_ci} Lower odds ratio confidence interval (95\%)
+#'       \item \code{odds_ratio} Odds ratio
+#'       \item \code{upper_ratio} Upper odds ratio confidence interval (95\%)
+#'     }
+#'   \item \code{over}
+#'     \itemize{
+#'       \item \code{diff_deviance} the difference between the null deviance
+#'       and model deviance
+#'       \item \code{diff_df} the difference in degrees of freedom
+#'       \item \code{chisq_prob} the chi-squared probability of the deviance statistic
+#'       \item \code{cox_snell} Cox and Snell pseudo R-squared
+#'       \item \code{nagelkerke} Nagelkerke pseudo R-squared
+#'       \item \code{hosmer} Hosmer-Lemeshow pseudo R-squared
+#'     }
 #' }
 #' @export
 check_logit <- function(model) {
 
+  # Individual predictor value results
+  predictor  = attr(model[["coefficients"]], "names")
+  beta       = model[["coefficients"]]
+  odds_ratio = beta ^ 2
+  conf_int   = exp(stats::confint(model))  # MASS must be loaded for glm method
+  lower_ci   = conf_int[, 1]
+  upper_ci   = conf_int[, 2]
+
+
+  individual_results <- data.frame(
+
+    predictor,
+    beta,
+    lower_ci,
+    odds_ratio,
+    upper_ci,
+
+    stringsAsFactors = FALSE
+
+  )
+
+  individual_results["(Intercept)", "lower_ci"]   <- "-"
+  individual_results["(Intercept)", "odds_ratio"] <- "-"
+  individual_results["(Intercept)", "upper_ci"]   <- "-"
+
+
+  # Model overall results
   # Difference between null model and model should be positive
   # I.e. if model deviance < null model deviance, model is an improvement
   diff_deviance <- model[["null.deviance"]] - model[["deviance"]]
@@ -34,14 +73,22 @@ check_logit <- function(model) {
   hosmer <- diff_deviance / model[["null.deviance"]]
 
   # List of outputs
-  out <- list(
+  overall_results <- data.frame(
+
     "diff_deviance" = diff_deviance,
     "diff_df"       = diff_df,
     "chisq_prob"    = chisq_prob,
     "cox_snell"     = cox_snell,
     "nagelkerke"    = nagelkerke,
-    "hosmer"        = hosmer)
+    "hosmer"        = hosmer,
 
-  out
+    stringsAsFactors = FALSE
+
+  )
+
+  list(
+    "ind"  = individual_results,
+    "over" = overall_results
+  )
 
 }
