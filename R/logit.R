@@ -49,9 +49,9 @@ check_logit <- function(model) {
 
   )
 
-  individual_results["(Intercept)", "lower_ci"]   <- "-"
-  individual_results["(Intercept)", "odds_ratio"] <- "-"
-  individual_results["(Intercept)", "upper_ci"]   <- "-"
+  individual_results["(Intercept)", "lower_ci"]   <- NA_real_
+  individual_results["(Intercept)", "odds_ratio"] <- NA_real_
+  individual_results["(Intercept)", "upper_ci"]   <- NA_real_
 
 
   # Model overall results
