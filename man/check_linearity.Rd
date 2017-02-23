@@ -19,4 +19,3 @@ A scatter plot
 \description{
 check_linearity
 }
-

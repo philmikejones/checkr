@@ -99,3 +99,43 @@ check_logit <- function(model) {
   )
 
 }
+
+
+#' test_residuals
+#'
+#' Calculate what percentage of studentised or standardised residuals
+#' are outliers, either +- 1.96 standard deviations or +- 2.58 standard
+#' deviations
+#'
+#' @param df the data frame used in the logistic regression model containing
+#'  the residuals
+#' @param residuals a character name of the column containing the residuals
+#' @param which which level to test, either 5\% (1.96 standard deviations) or
+#' 1% (2.58 standard deviations)
+#'
+#' @return the proportion of outlying cases. Ideally this should be less than 5%
+#' for 1.96 standard deviations, or less than 1% for 2.58 standard devations.
+#' @export
+#'
+#' @examples
+test_residuals <- function(df, residuals, which = "sd5") {
+
+  # 5% lie outside +- 1.96 sd from mean
+  sd5plus  <- mean(df[[residuals]]) + (1.96 * sd(df[[residuals]]))
+  sd5minus <- mean(df[[residuals]]) - (1.96 * sd(df[[residuals]]))
+
+  # 1% lie outside +- 2.58 sd from mean
+  sd1plus  <- mean(df[[residuals]]) + (2.58 * sd(df[[residuals]]))
+  sd1minus <- mean(df[[residuals]]) - (2.58 * sd(df[[residuals]]))
+
+  if (which == "sd5") {
+    (length(df[[residuals]][df[[residuals]] > sd5plus])  / nrow(df)) +
+      (length(df[[residuals]][df[[residuals]] < sd5minus]) / nrow(df))
+  } else {
+    if (which == "sd1") {
+      (length(df[[residuals]][df[[residuals]] > sd1plus])  / nrow(df)) +
+        (length(df[[residuals]][df[[residuals]] < sd1minus]) / nrow(df))
+    }
+  }
+
+}

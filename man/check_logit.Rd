@@ -35,4 +35,3 @@ A list containing two data frames ('ind' and 'over'):
 \description{
 Check logistic regression statistics and assumptions
 }
-
