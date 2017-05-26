@@ -1,6 +1,7 @@
 Package: checkr
 Title: Easily check regression diagnostics
 Version: 0.0.0.9000
+Date: 2017-05-26
 Authors@R: person("Phil Mike", "Jones", email = "philmikejones@gmail.com", role = c("aut", "cre"))
 Description: Check regression models and assumptions.
 Depends:
